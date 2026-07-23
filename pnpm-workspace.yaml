@@ -13,3 +13,6 @@
 # script is allowed for everyone.
 ignoredBuiltDependencies:
   - esbuild
+  # @scarf/scarf: a dependency's telemetry/analytics postinstall. Harmless to
+  # skip; blocking it just opts out of install-time analytics.
+  - "@scarf/scarf"

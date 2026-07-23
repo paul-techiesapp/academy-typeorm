@@ -28,11 +28,19 @@ if (!/^[A-Za-z0-9_]+$/.test(name)) {
 
 const targetPath = `src/migrations/${name}`;
 
-// execFileSync with an argument array — no shell is spawned, so nothing in the
-// arguments is interpreted as shell syntax.
+// Cross-platform (Windows + macOS/Linux):
+//   - `process.execPath` is the ABSOLUTE path to the node binary, so there's
+//     no PATH lookup and no ".cmd vs no-extension" difference between OSes.
+//   - `--import tsx` registers tsx's TypeScript loader, letting node run the
+//     TypeORM CLI (and the .ts DataSource it imports) directly.
+//   - execFileSync with an argument array spawns NO shell, so nothing in the
+//     arguments is interpreted as shell syntax (defense-in-depth with the
+//     name allow-list above).
 execFileSync(
-  "tsx",
+  process.execPath,
   [
+    "--import",
+    "tsx",
     "./node_modules/typeorm/cli.js",
     "-d",
     "src/data-source.ts",

@@ -1,9 +1,11 @@
 import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 import * as dotenv from "dotenv";
+import swaggerUi from "swagger-ui-express";
 import { AppDataSource } from "./data-source";
 import { userRouter } from "./routes/user.routes";
 import { postRouter } from "./routes/post.routes";
+import { buildOpenApiDocument } from "./openapi/document";
 
 dotenv.config();
 
@@ -17,6 +19,12 @@ app.use(express.json());
 app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "ok", db: AppDataSource.isInitialized ? "up" : "down" });
 });
+
+// API documentation — generated from the same Zod schemas used for validation.
+// Interactive UI at /docs, raw spec at /docs.json (importable into Postman etc.)
+const openApiDocument = buildOpenApiDocument();
+app.get("/docs.json", (_req: Request, res: Response) => res.json(openApiDocument));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
 // Feature routes
 app.use("/users", userRouter);

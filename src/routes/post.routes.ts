@@ -2,6 +2,8 @@ import { Router, Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Post } from "../entities/Post";
 import { User } from "../entities/User";
+import { validateBody } from "../middleware/validate";
+import { CreatePostSchema, CreatePostBody } from "../schemas/post.schema";
 
 export const postRouter = Router();
 
@@ -44,12 +46,13 @@ postRouter.get("/:id", async (req: Request, res: Response) => {
 });
 
 // POST /posts — create a post for an existing user.
-// Body: { title, content, userId }
-postRouter.post("/", async (req: Request, res: Response) => {
-  const { title, content, userId } = req.body;
+// validateBody guarantees title/content/userId are present and well-typed;
+// we still check the FK target exists (a shape-valid userId can still be
+// nonexistent — that's a data concern, not a schema concern).
+postRouter.post("/", validateBody(CreatePostSchema), async (req: Request, res: Response) => {
+  const { title, content, userId } = req.body as CreatePostBody;
 
-  // Verify the parent user exists before creating the child post.
-  const user = await userRepository.findOneBy({ id: Number(userId) });
+  const user = await userRepository.findOneBy({ id: userId });
   if (!user) {
     return res.status(400).json({ message: "userId does not reference an existing user" });
   }

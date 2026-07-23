@@ -4,7 +4,7 @@
   "description": "Express + TypeORM + MySQL boilerplate in TypeScript",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/index.js",
     "typeorm": "tsx ./node_modules/typeorm/cli.js -d src/data-source.ts",
@@ -22,15 +22,20 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^9.1.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mysql2": "^3.12.0",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20"
+    "swagger-ui-express": "^5.0.1",
+    "typeorm": "^0.3.20",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.5",
+    "@types/swagger-ui-express": "^4.1.8",
+    "nodemon": "^3.1.14",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }
