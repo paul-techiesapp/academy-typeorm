@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
 import { User } from "./entities/User";
+import { Post } from "./entities/Post";
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ export const AppDataSource = new DataSource({
   logging: process.env.DB_LOGGING === "true",
 
   // Registered entities. Add new entity classes here.
-  entities: [User],
+  entities: [User, Post],
 
   // Glob so both .ts (dev via tsx) and compiled .js (prod) migrations resolve.
   migrations: [__dirname + "/migrations/*.{ts,js}"],

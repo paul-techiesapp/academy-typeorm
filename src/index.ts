@@ -3,6 +3,7 @@ import express, { Request, Response, NextFunction } from "express";
 import * as dotenv from "dotenv";
 import { AppDataSource } from "./data-source";
 import { userRouter } from "./routes/user.routes";
+import { postRouter } from "./routes/post.routes";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get("/health", (_req: Request, res: Response) => {
 
 // Feature routes
 app.use("/users", userRouter);
+app.use("/posts", postRouter);
 
 // Central error handler
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
