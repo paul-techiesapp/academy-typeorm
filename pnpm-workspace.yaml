@@ -1,0 +1,15 @@
+# pnpm 10+ blocks dependency build scripts by default (supply-chain safety).
+# The decision to allow/deny each one is recorded HERE and committed, so every
+# `pnpm install` applies it automatically — no developer has to run
+# `pnpm approve-builds` manually.
+#
+# ignoredBuiltDependencies: build script is intentionally NOT run.
+#   - esbuild: not needed — tsx ships its own bundled esbuild binary, so the
+#     standalone esbuild postinstall (which just downloads a platform binary)
+#     is unnecessary here.
+#
+# If you add a native module that MUST compile (e.g. bcrypt, sharp,
+# better-sqlite3), add it under `onlyBuiltDependencies:` instead so its build
+# script is allowed for everyone.
+ignoredBuiltDependencies:
+  - esbuild
