@@ -1,0 +1,37 @@
+{
+  "name": "orm",
+  "version": "1.0.0",
+  "description": "Express + TypeORM + MySQL boilerplate in TypeScript",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typeorm": "tsx ./node_modules/typeorm/cli.js -d src/data-source.ts",
+    "migration:generate": "pnpm run typeorm migration:generate",
+    "migration:create": "tsx ./node_modules/typeorm/cli.js migration:create",
+    "migration:run": "pnpm run typeorm migration:run",
+    "migration:revert": "pnpm run typeorm migration:revert",
+    "migration:show": "pnpm run typeorm migration:show"
+  },
+  "keywords": [
+    "express",
+    "typeorm",
+    "mysql",
+    "typescript"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
